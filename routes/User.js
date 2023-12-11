@@ -11,6 +11,7 @@ const sendToken = (user, statusCode, res) => {
     res.status(statusCode).send({ message: "success", token });
 };
 
+const base_url = process.env.base_url
 
 router.post('/register', async (req, res) => {
     const { email, pass } = req.body;
@@ -74,7 +75,7 @@ router.post('/forgotpass',async(req,res,next)=>{
     }
     const resetToken = user.getResetPasswordToken();
     await user.save();
-    const resetUrl = `http://localhost:3001/resetpassword/${resetToken}`;
+    const resetUrl = `${base_url}/resetpassword/${resetToken}`;
     const message = `<h1>Reset Password link</h1><p>click on the link to reset password</p><a href=${resetUrl} clicktracking=off>${resetUrl}</a>`;
 
     console.log(resetUrl);
